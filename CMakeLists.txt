@@ -22,8 +22,12 @@ target_include_directories(virtuv
 )
 
 # Link core to executable
-target_link_libraries(virtuv
-        PRIVATE core
+target_link_libraries(virtuv PRIVATE
+        core
+        ${Boost_LIBRARIES}
 )
 
 enable_testing()
+
+find_package(Boost REQUIRED COMPONENTS system)
+include_directories(${Boost_INCLUDE_DIRS})
