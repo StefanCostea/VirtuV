@@ -9,7 +9,8 @@ add_subdirectory(src/utils)
 add_subdirectory(tests)
 
 add_executable(virtuv
-        src/main.cpp)
+        src/main.cpp
+)
 
 # Public API
 target_include_directories(virtuv

@@ -1,7 +1,7 @@
 #pragma once
-#include "PipelineStage.hpp"
-#include "Memory.hpp"
-#include "RegisterBank.hpp"
+#include "cpu/pipeline/PipelineStage.hpp"
+#include "memory/Memory.hpp"
+#include "register_bank/RegisterBank.hpp"
 
 class FetchStage : public PipelineStage {
 private:

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Pipeline.hpp"
-#include "RegisterBank.hpp"
-#include "Memory.hpp"
+#include "pipeline/Pipeline.hpp"
+#include "register_bank/RegisterBank.hpp"
+#include "memory/Memory.hpp"
 
 class CPU {
 private:
