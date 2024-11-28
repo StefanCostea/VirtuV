@@ -6,6 +6,12 @@ file(GLOB_RECURSE CORE_SOURCES
 
 add_library(core ${CORE_SOURCES})
 
+# Define the Python bindings module
+pybind11_add_module(virtuv_bindings ../bindings/virtuv_bindings.cpp)
+
+# Link the bindings to the core library
+target_link_libraries(virtuv_bindings PRIVATE core)
+
 # Establish private include dirs
 target_include_directories(core
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}  # Local headers for modules

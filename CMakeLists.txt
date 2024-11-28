@@ -4,6 +4,10 @@ project(VirtuV VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Find Python interpreter and Pybind11
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(pybind11 REQUIRED)
+
 add_subdirectory(src/core)
 add_subdirectory(src/utils)
 add_subdirectory(tests)
