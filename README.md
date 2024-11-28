@@ -16,7 +16,7 @@
 ---
 
 ## **Get Started**
-Check out the [Quick Start Guide](#) to install and run VirtuV in minutes.
+Check out the [Quick Start Guide](docs/getting_started.md) to install and run VirtuV in minutes.
 
 ---
 
