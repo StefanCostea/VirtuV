@@ -9,8 +9,8 @@ private:
 
 public:
     CPU();
-    uint32_t readRegister(uint8_t reg);
-    void writeRegister(uint8_t reg, uint32_t value);
-    uint32_t getPC();           
-    void setPC(uint32_t value);
+    uint32_t read_register(uint8_t reg);
+    void write_register(uint8_t reg, uint32_t value);
+    uint32_t get_pc();           
+    void set_pc(uint32_t value);
 };
