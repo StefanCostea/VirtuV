@@ -1,7 +1,4 @@
 .idea/
 build/
-<<<<<<< Updated upstream
 cmake-build-debug/
-=======
 .vscode/
->>>>>>> Stashed changes
