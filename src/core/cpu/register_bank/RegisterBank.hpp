@@ -11,5 +11,5 @@ public:
     RegisterBang();
 
     uint32_t read(uint8_t reg);
-    void write(uint8_t reg, uint32_t value);
+    void write(uint8_t reg, uint2_t value);
 };
