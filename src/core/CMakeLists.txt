@@ -6,6 +6,9 @@ file(GLOB_RECURSE CORE_SOURCES
 
 add_library(core ${CORE_SOURCES})
 
+#Enable PIC -> for pybind
+set_target_properties(core PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
 # Define the Python bindings module
 pybind11_add_module(virtuv_bindings ../bindings/virtuv_bindings.cpp)
 
