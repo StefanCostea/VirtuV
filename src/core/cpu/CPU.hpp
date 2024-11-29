@@ -6,7 +6,7 @@
 
 class CPU {
 private:
-    RegisteBank register_bank; // Manages registers
+    RegisterBank register_bank; // Manages registers
     Memory memory;              // Manages memory
     Pipeline pipeline;          // Manages instruction processing
 
