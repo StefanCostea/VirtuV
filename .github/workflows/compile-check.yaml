@@ -14,15 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Cache apt package archives
-      - name: Cache apt archives
-        uses: actions/cache@v3
-        with:
-          path: /var/cache/apt/archives
-          key: ${{ runner.os }}-apt-${{ hashFiles('CMakeLists.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-
-
       # Step 2: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -33,13 +24,12 @@ jobs:
         with:
           cmake-version: "3.26"
 
-      # Step 4: Install dependencies (e.g., build tools)
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y g++ make
-          sudo apt install pybind11-dev
-          sudo apt-get install libboost-all-dev
+      # Step 2: Cache APT packages
+      - name: Cache APT packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: g++ make libboost-all-dev pybind11-dev
+          version: 1.0
 
       # Step 5: Configure the project with CMake
       - name: Configure with CMake
