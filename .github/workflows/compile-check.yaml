@@ -1,0 +1,55 @@
+name: Compile Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Compile
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Cache apt package archives
+      - name: Cache apt archives
+        uses: actions/cache@v3
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-${{ hashFiles('CMakeLists.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+
+      # Step 2: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 3: Set up CMake
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: "3.26"
+
+      # Step 4: Install dependencies (e.g., build tools)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ make
+          sudo apt install pybind11-dev
+          sudo apt-get install libboost-all-dev
+
+      # Step 5: Configure the project with CMake
+      - name: Configure with CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+
+      # Step 6: Build the project
+      - name: Build the project
+        run: |
+          cd build
+          cmake --build .
