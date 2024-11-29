@@ -7,3 +7,6 @@ CMakeCache.txt
 cmake_install.cmake
 CTestTestfile.cmake
 Makefile
+virtuv
+src/core/libcore.a
+src/core/virtuv_bindings.cpython-310-x86_64-linux-gnu.so
