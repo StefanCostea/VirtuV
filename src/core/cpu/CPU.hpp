@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "core/cpu/pipeline/Pipeline.hpp"
 #include "core/cpu/register_bank/RegisterBank.hpp"
 #include "core/memory/Memory.hpp"
