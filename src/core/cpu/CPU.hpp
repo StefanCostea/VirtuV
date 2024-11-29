@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pipeline/Pipeline.hpp"
-#include "register_bank/RegisterBank.hpp"
-#include "memory/Memory.hpp"
+#include "core/cpu/pipeline/Pipeline.hpp"
+#include "core/cpu/register_bank/RegisterBank.hpp"
+#include "core/memory/Memory.hpp"
 
 class CPU {
 private:
@@ -13,6 +13,6 @@ private:
 public:
     CPU(size_t memory_size);
 
-    void load_program(const std::string& filepath); // Load a binary program
+    int load_program(const std::string &filepath); // Load a binary program
     void run();                                     // Run the CPU
 };

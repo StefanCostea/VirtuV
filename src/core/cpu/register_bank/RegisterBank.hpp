@@ -5,7 +5,7 @@
 
 class RegisterBank {
 private:
-    std::array<uint32_t, 32> registers; // General-purpose registers
+    std::array<uint32_t, 32> registers{}; // General-purpose registers
 
 public:
     RegisterBank();

@@ -14,11 +14,11 @@ target_link_libraries(virtuv_bindings PRIVATE core)
 
 # Establish private include dirs
 target_include_directories(core
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/cpu
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/memory
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/utils
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+        PUBLIC ${CMAKE_SOURCE_DIR}/src
 )
+
+#Set core as include dir root
+include_directories(${CMAKE_SOURCE_DIR}/?)
 
 # Compilation options
 target_compile_options(core
