@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <initializer_list>
 #include <utility>
+#include <variant>
 #include "utils/bitutils.hpp"
 
 //Values are the opcodes for the matching instructions
@@ -252,3 +253,14 @@ public:
         return opcode;
     }
 };
+
+// Define the variant type to hold all possible instruction formats
+using DecodedInstructionVariant = std::variant<
+    DecodedInstruction<InstructionFormat::INIVALID_TYPE>,
+    DecodedInstruction<InstructionFormat::R_TYPE>,
+    DecodedInstruction<InstructionFormat::I_TYPE>,
+    DecodedInstruction<InstructionFormat::S_TYPE>,
+    DecodedInstruction<InstructionFormat::B_TYPE>,
+    DecodedInstruction<InstructionFormat::U_TYPE>,
+    DecodedInstruction<InstructionFormat::J_TYPE>
+>;

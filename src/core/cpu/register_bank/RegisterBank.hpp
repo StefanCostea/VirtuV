@@ -10,6 +10,6 @@ private:
 public:
     RegisterBank();
 
-    uint32_t read(uint8_t reg);
+    uint32_t read(uint8_t reg) const;
     void write(uint8_t reg, uint32_t value);
 };

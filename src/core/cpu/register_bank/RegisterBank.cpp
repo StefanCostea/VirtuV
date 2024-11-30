@@ -4,7 +4,7 @@ RegisterBank::RegisterBank() {
     registers.fill(0); // Initialize all registers to 0
 }
 
-uint32_t RegisterBank::read(uint8_t reg) {
+uint32_t RegisterBank::read(uint8_t reg) const {
     if (reg >= registers.size()) {
         throw std::out_of_range("Register index out of range");
     }
