@@ -4,13 +4,15 @@
 #include <utility>
 #include "utils/bitutils.hpp"
 
+//Values are the opcodes for the matching instructions
 enum class InstructionFormat {
-    R_TYPE,
-    I_TYPE,
-    S_TYPE,
-    B_TYPE,
-    U_TYPE,
-    J_TYPE
+    R_TYPE          = 0x33, 
+    I_TYPE          = 0x13,
+    S_TYPE          = 0x23, 
+    B_TYPE          = 0x63,
+    U_TYPE          = 0x37,
+    J_TYPE          = 0x6F,
+    INIVALID_TYPE   = 0xFF
 };
 
 // Combines bit ranges from the instruction into a single immediate value
@@ -28,14 +30,50 @@ constexpr int32_t get_combined_immediate(const Instruction& instr,
     return immediate;
 }
 
+// Base class for decoded instructions
+class DecodedInstructionBase {
+public:
+    static constexpr InstructionFormat format = InstructionFormat::INIVALID_TYPE;
+    union {
+        uint32_t raw; // Full 32-bit raw instruction
+        struct {
+            uint32_t opcode : 7;  // Bits [6:0]
+            uint32_t rest : 25;      // Bits [31:7]
+        };
+    };
+
+    DecodedInstructionBase() = default;
+
+    explicit DecodedInstructionBase(uint32_t raw_instruction) : raw(raw_instruction) {}
+
+    virtual ~DecodedInstructionBase() = default;
+    virtual uint32_t get_opcode() const {
+        return opcode;
+    }
+};
+
 // Base template for DecodedInstruction
 template <InstructionFormat Format>
 class DecodedInstruction;
 
+//Specialization fro invalid type (just for initilization and throwing exceptions when something is not working properly)
+template <>
+class DecodedInstruction<InstructionFormat::INIVALID_TYPE> : public DecodedInstructionBase {
+public:
+    static constexpr InstructionFormat format = InstructionFormat::INIVALID_TYPE;
+
+    explicit DecodedInstruction(uint32_t raw_instruction) : DecodedInstructionBase(raw_instruction) {}
+
+    uint32_t get_opcode() const override {
+        throw std::runtime_error("Attempting to access an invalid instruction format");
+    }
+};
+
 // Specialization for R-type instructions
 template <>
-class DecodedInstruction<InstructionFormat::R_TYPE> {
+class DecodedInstruction<InstructionFormat::R_TYPE> : DecodedInstructionBase{
 public:
+    static constexpr InstructionFormat format = InstructionFormat::R_TYPE;
     union {
         uint32_t raw; // Full 32-bit raw instruction
         struct {
@@ -49,12 +87,17 @@ public:
     };
 
     explicit DecodedInstruction(uint32_t instruction) : raw(instruction) {}
+
+    uint32_t get_opcode() const override {
+        return opcode;
+    }
 };
 
 // Specialization for I-type instructions
 template <>
-class DecodedInstruction<InstructionFormat::I_TYPE> {
+class DecodedInstruction<InstructionFormat::I_TYPE> : DecodedInstructionBase{
 public:
+    static constexpr InstructionFormat format = InstructionFormat::I_TYPE;
     union {
         uint32_t raw; // Full 32-bit raw instruction
         struct {
@@ -74,12 +117,17 @@ public:
             {31, 20} // Immediate field
         }), 12);
     }
+
+    uint32_t get_opcode() const override {
+        return opcode;
+    }
 };
 
 // Specialization for S-type instructions
 template <>
-class DecodedInstruction<InstructionFormat::S_TYPE> {
+class DecodedInstruction<InstructionFormat::S_TYPE> : DecodedInstructionBase {
 public:
+    static constexpr InstructionFormat format = InstructionFormat::S_TYPE;
     union {
         uint32_t raw; // Full 32-bit raw instruction
         struct {
@@ -101,12 +149,17 @@ public:
             {11, 7}   // Lower immediate [4:0]
         }), 12);
     }
+
+    uint32_t get_opcode() const override {
+        return opcode;
+    }
 };
 
 // Specialization for B-type instructions
 template <>
-class DecodedInstruction<InstructionFormat::B_TYPE> {
+class DecodedInstruction<InstructionFormat::B_TYPE> : DecodedInstructionBase {
 public:
+    static constexpr InstructionFormat format = InstructionFormat::B_TYPE;
     union {
         uint32_t raw; // Full 32-bit raw instruction
         struct {
@@ -132,12 +185,17 @@ public:
             {7, 7}    // imm[11]
         }), 13);
     }
+
+    uint32_t get_opcode() const override {
+        return opcode;
+    }
 };
 
 // Specialization for U-type instructions
 template <>
-class DecodedInstruction<InstructionFormat::U_TYPE> {
+class DecodedInstruction<InstructionFormat::U_TYPE> : DecodedInstructionBase{
 public:
+    static constexpr InstructionFormat format = InstructionFormat::U_TYPE;
     union {
         uint32_t raw; // Full 32-bit raw instruction
         struct {
@@ -155,12 +213,17 @@ public:
             {31, 12} // Immediate field
         }) << 12; // Shift left by 12 bits
     }
+
+    uint32_t get_opcode() const override {
+        return opcode;
+    }
 };
 
 // Specialization for J-type instructions
 template <>
-class DecodedInstruction<InstructionFormat::J_TYPE> {
+class DecodedInstruction<InstructionFormat::J_TYPE> : DecodedInstructionBase{
 public:
+    static constexpr InstructionFormat format = InstructionFormat::J_TYPE;
     union {
         uint32_t raw; // Full 32-bit raw instruction
         struct {
@@ -183,5 +246,9 @@ public:
             {20, 20}, // imm[11]
             {19, 12}  // imm[19:12]
         }), 21);
+    }
+
+    uint32_t get_opcode() const override {
+        return opcode;
     }
 };
