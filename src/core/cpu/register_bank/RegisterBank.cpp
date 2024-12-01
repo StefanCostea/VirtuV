@@ -1,6 +1,6 @@
 #include "RegisterBank.hpp"
 
-RegisterBank::RegisterBank() {
+RegisterBank::RegisterBank() : pc(0) {
     registers.fill(0); // Initialize all registers to 0
 }
 
@@ -19,4 +19,12 @@ void RegisterBank::write(uint8_t reg, uint32_t value) {
         throw std::out_of_range("Register index out of range");
     }
     registers[reg] = value;
+}
+
+uint32_t RegisterBank::get_pc() const {
+    return pc;
+}
+
+void RegisterBank::set_pc(uint32_t value) {
+    pc = value;
 }

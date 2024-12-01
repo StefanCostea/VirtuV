@@ -4,13 +4,16 @@
 
 #include "core/cpu/pipeline/Pipeline.hpp"
 #include "core/cpu/register_bank/RegisterBank.hpp"
-#include "core/memory/Memory.hpp"
+#include "core/memory/MMU.hpp"
 
 class CPU {
 private:
-    RegisterBank register_bank; // Manages registers
-    Memory memory;              // Manages memory
-    Pipeline pipeline;          // Manages instruction processing
+    RegisterBank register_bank;     // Manages registers
+    Pipeline pipeline;              // Manages instruction processing
+    MMU mmu;                        /**< Memory Management Unit */
+    PhysicalMemory physical_memory;
+    PageTable page_table;
+    PrivilegeMode privilege_mode;   /**< Current privilege mode of the CPU */
 
 public:
     CPU(size_t memory_size);

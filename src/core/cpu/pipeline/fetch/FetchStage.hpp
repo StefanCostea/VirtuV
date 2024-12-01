@@ -1,16 +1,16 @@
 #pragma once
 #include <cstdint>
 #include "core/cpu/pipeline/PipelineStage.hpp"
-#include "core/memory/Memory.hpp"
+#include "core/cpu/register_bank/RegisterBank.hpp"
+#include "core/memory/MMU.hpp"
 
 class FetchStage : public PipelineStage {
 private:
-    Memory& memory;
-    uint32_t& program_counter;
+    MMU& mmu;
     uint32_t fetched_instruction;
-
+    RegisterBank& register_bank;
 public:
-    FetchStage(Memory& memory, uint32_t& program_counter);
+    FetchStage(MMU& mmu, RegisterBank& register_bank);
     void process() override;
     uint32_t get_fetched_instruction();
 };

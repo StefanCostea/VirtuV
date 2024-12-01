@@ -4,7 +4,13 @@ file(GLOB_RECURSE CORE_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp"
 )
 
-add_library(core ${CORE_SOURCES})
+add_library(core ${CORE_SOURCES}
+        memory/PageTable.hpp
+        cpu/state/PrivilegeMode.hpp
+        memory/PhysicalMemory.cpp
+        memory/PageTableEntry.hpp
+        memory/PageTableEntry.cpp
+        memory/PageTable.cpp)
 
 #Enable PIC -> for pybind
 set_target_properties(core PROPERTIES POSITION_INDEPENDENT_CODE ON)

@@ -1,16 +1,18 @@
 #pragma once
-#include "core/cpu/CPU.hpp"
 #include "core/cpu/register_bank/RegisterBank.hpp"
-#include "core/memory/Memory.hpp"
+#include "core/memory/MMU.hpp"
+#include "decode/DecodeStage.hpp"
+#include "fetch/FetchStage.hpp"
 
 class Pipeline {
 private:
-    RegisterBank* registerBank;
-    Memory* memory;
+    RegisterBank& register_bank;
+    MMU& mmu;
+
+    FetchStage fetch_stage;
+    DecodeStage decode_stage;
 public:
+    Pipeline(RegisterBank& register_bank, MMU& mmu);
+
     void run_cycle();
-
-    Pipeline() = default;
-    Pipeline(RegisterBank* register_bank, Memory* memory);
-
 };
