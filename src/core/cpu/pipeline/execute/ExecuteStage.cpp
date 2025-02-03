@@ -103,3 +103,8 @@ void ExecuteStage::process() {
 const ExecutionResult& ExecuteStage::get_result() const {
     return result;
 }
+
+//Set input decoded instruction
+void ExecuteStage::set_decoded_instruction(const DecodedInstructionVariant& instruction) {
+    decoded_instruction = instruction;   
+}

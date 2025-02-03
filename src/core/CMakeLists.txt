@@ -21,6 +21,9 @@ pybind11_add_module(virtuv_bindings ../bindings/virtuv_bindings.cpp)
 # Link the bindings to the core library
 target_link_libraries(virtuv_bindings PRIVATE core)
 
+#Change bindings default name to vituv.so
+set_target_properties(virtuv_bindings PROPERTIES PREFIX "" SUFFIX ".so")
+
 # Establish private include dirs
 target_include_directories(core
         PUBLIC ${CMAKE_SOURCE_DIR}/src

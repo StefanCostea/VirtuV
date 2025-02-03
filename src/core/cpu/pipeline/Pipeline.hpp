@@ -3,6 +3,9 @@
 #include "core/memory/MMU.hpp"
 #include "decode/DecodeStage.hpp"
 #include "fetch/FetchStage.hpp"
+#include "execute/ExecuteStage.hpp"
+#include "memory_access/MemoryAccessStage.hpp"
+#include "write_back/WriteBackStage.hpp"
 
 class Pipeline {
 private:
@@ -11,6 +14,9 @@ private:
 
     FetchStage fetch_stage;
     DecodeStage decode_stage;
+    ExecuteStage execute_stage;
+    MemoryAccessStage mem_acces_stage;
+    WriteBackStage write_back_stage;
 public:
     Pipeline(RegisterBank& register_bank, MMU& mmu);
 
