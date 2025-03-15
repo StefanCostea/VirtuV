@@ -10,3 +10,5 @@ Makefile
 virtuv
 src/core/libcore.a
 src/core/virtuv_bindings.cpython-310-x86_64-linux-gnu.so
+src/core/virtuv_bindings.so
+Testing/

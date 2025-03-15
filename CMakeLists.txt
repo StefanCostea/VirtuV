@@ -4,6 +4,14 @@ project(VirtuV VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(NOT DEFINED ENV{IS_ENV_SET})
+message(FATAL_ERROR "Configuration Error: The required environment variable 'IS_ENV_SET' is not defined. Please ensure you have sourced the setup.env file before running CMake. For example, run:
+    
+    source setup.env
+
+in your terminal, then re-run CMake to configure the project.")
+endif()
+
 #Supress find boost warning
 if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
