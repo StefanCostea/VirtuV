@@ -13,7 +13,7 @@ class TestCPU(unittest.TestCase):
         program = [
             0x02A00093,  # addi x1, x0, 42
             0x3A08113,   # addi x2, x1, 58
-            0xFFFFFFFF   # invalid instruction (to stop execution)
+            0x0000006F   # jal x0, 0 -> jump to self (end of program)
         ]
         
         for instr in program:
@@ -36,13 +36,14 @@ class TestCPU(unittest.TestCase):
         try:
             cpu.run()
         except Exception as e:
-            print(e)
-            pass
+            self.assertFalse("Exception caught during test")
 
         # x0 is always 0, x1 should be 42, and x2 should be 42 + 58 = 100.
         self.assertEqual(cpu.get_register(0), 0, "x0 must be 0")
         self.assertEqual(cpu.get_register(1), 42, "x1 should be 42 after addi x1, x0, 42")
         self.assertEqual(cpu.get_register(2), 100, "x2 should be 100 after addi x2, x1, 58")
+
+    
 
 if __name__ == "__main__":
     unittest.main()

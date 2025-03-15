@@ -4,6 +4,9 @@ project(VirtuV VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#Options that modify the build system behaviour, if they are not applied correctly try rerunning the cmake with --fresh to ensure the CMakeCache is empty
+option(ENABLE_TRACE "Enable trace logging in the project" OFF)
+
 if(NOT DEFINED ENV{IS_ENV_SET})
 message(FATAL_ERROR "Configuration Error: The required environment variable 'IS_ENV_SET' is not defined. Please ensure you have sourced the setup.env file before running CMake. For example, run:
     
@@ -15,6 +18,14 @@ endif()
 #Supress find boost warning
 if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
+endif()
+
+#Add enable trace compile flag to enable traces in plt utils
+if(ENABLE_TRACE)
+    message(STATUS "Trace logging is enabled")
+    add_compile_definitions(ENABLE_TRACE)
+else()
+    message(STATUS "Trace logging is disabled")
 endif()
 
 # Find Python interpreter and Pybind11

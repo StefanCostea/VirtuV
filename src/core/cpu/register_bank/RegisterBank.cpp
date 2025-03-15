@@ -1,4 +1,5 @@
 #include "RegisterBank.hpp"
+#include "utils/plt.hpp"
 
 RegisterBank::RegisterBank() : pc(0) {
     registers.fill(0); // Initialize all registers to 0

@@ -1,6 +1,7 @@
 #include "ExecuteStage.hpp"
 #include <stdexcept>
 #include <variant>
+#include "utils/plt.hpp"
 
 // Constructor
 ExecuteStage::ExecuteStage(RegisterBank& register_bank)
@@ -87,7 +88,12 @@ void ExecuteStage::process() {
                 immediate = instruction.get_immediate();
 
                 result.branch_taken = true;
-                result.branch_target = immediate;
+                result.branch_target = register_bank.get_pc() + immediate;
+
+                //Handle Jump to Self instruction (Infinite loop detection to determine end of program)
+                if (result.branch_target == register_bank.get_pc()) {
+                    throw EndOfProgramException();
+                }
             }
 
             // Unsupported instruction format
