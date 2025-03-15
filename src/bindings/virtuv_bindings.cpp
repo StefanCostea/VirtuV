@@ -131,7 +131,8 @@ PYBIND11_MODULE(virtuv_bindings, m) {
         .def(py::init<size_t>(), py::arg("memory_size"))
         .def("load_program", &CPU::load_program, "Load a binary program into memory", py::arg("filepath"))
         .def("run", &CPU::run, "Run the CPU")
-        .def("get_register", &CPU::get_register, "Read a given general purpose value");
+        .def("get_register", &CPU::get_register, "Read a given general purpose value")
+        .def("read_word_from_memory", &CPU::read_word_from_memory, "Read a word given an address from memory");
 
     // Bind pipeline
     py::class_<Pipeline>(m, "Pipeline")

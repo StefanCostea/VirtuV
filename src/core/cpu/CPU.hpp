@@ -21,4 +21,5 @@ public:
     int load_program(const std::string &filepath); // Load a binary program
     void run();                                     // Run the CPU
     uint32_t get_register(uint8_t reg);             // returns register value  
+    uint32_t read_word_from_memory(uint32_t address); // reads value of memory at address
 };

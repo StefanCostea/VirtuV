@@ -42,6 +42,33 @@ void ExecuteStage::process() {
                     case 0x0: // ADDI
                         result.alu_result = rs1_value + immediate;
                         break;
+                    case 0x2: // SLTI: Set less than (signed)
+                        result.alu_result = (static_cast<int32_t>(rs1_value) < immediate) ? 1 : 0;
+                        break;
+                    case 0x3: // SLTIU: Set less than (unsigned)
+                        result.alu_result = (rs1_value < static_cast<uint32_t>(immediate)) ? 1 : 0;
+                        break;
+                    case 0x4: // XORI
+                        result.alu_result = rs1_value ^ immediate;
+                        break;
+                    case 0x6: // ORI
+                        result.alu_result = rs1_value | immediate;
+                        break;
+                    case 0x7: // ANDI
+                        result.alu_result = rs1_value & immediate;
+                        break;
+                    case 0x1: { // SLLI (Shift Left Logical Immediate)
+                        // For SLLI, the lower 5 bits of the immediate specify the shift amount.
+                        uint32_t shamt = immediate & 0x1F;
+                        result.alu_result = rs1_value << shamt;
+                        break;
+                    }
+                    case 0x5: { // Either SRLI (logical shift right)
+                        uint32_t shamt = immediate & 0x1F;
+                        // Determine shift type based on funct7 field (which is part of the instruction encoding)
+                        result.alu_result = rs1_value >> shamt;
+                        break;
+                    }
                     default:
                         throw std::invalid_argument("Unsupported I-Type funct3");
                 }

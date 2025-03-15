@@ -70,3 +70,12 @@ void CPU::run() {
 uint32_t CPU::get_register(uint8_t reg){
     return register_bank.read(reg);
 }
+
+uint32_t CPU::read_word_from_memory(uint32_t address){
+    try {
+        return mmu.read_word(address);
+    } catch (const std::exception& e) {
+        PLT_ERROR("Error reading from physical memory at address " + std::to_string(address) + ": " + e.what());
+        return -1;
+    }
+}
